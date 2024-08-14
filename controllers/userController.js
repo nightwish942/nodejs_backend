@@ -49,6 +49,10 @@ const loginUser = async (req, res) => {
             });
         }
     };
+    const createToken = (userId) =>{
+return jwt;
+
+    };
 
 
     export { createUser, loginUser };
