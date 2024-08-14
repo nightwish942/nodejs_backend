@@ -1,6 +1,6 @@
 import User from '../models/userModel.js';
 import bcrypt from "bcrypt"
-
+import jwt from 'jsonwebtoken';
 const createUser = async (req, res) => {
     try {
         const user =  User.create(req.body)
@@ -19,10 +19,10 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { username, password } = req.body;
-        const user = await User.findOne({ username })
-        let same = false
+        const user = await User.findOne({ username });
+        let same = false;
         if (user) {
-            same = await bcrypt.compare(password, user.password)
+            same = await bcrypt.compare(password, user.password);
         } else {
             res.status(401).json({
                 succeded: false,
