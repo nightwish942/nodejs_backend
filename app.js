@@ -6,6 +6,7 @@ import photoRoute from "./routes/photoRoute.js";
 import userRoute from "./routes/userRoute.js";
 import cookieParser from 'cookie-parser';
 import conn from './db.js';
+import { checkUser } from './middlewares/authMiddleware.js';
 
 conn();
 
@@ -18,7 +19,7 @@ app.set("view engine","ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
+app.get('*', checkUser);
 app.use(express.static('public'));
 app.use("/",pageRoute);
 app.use("/about.html",pageRoute);

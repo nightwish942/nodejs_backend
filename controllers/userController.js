@@ -40,10 +40,9 @@ const loginUser = async (req, res) => {
 
 
 
-            res.status(200).json({
-                user,
+            res.redirect("users/dashboard");
                
-            });
+        
 
         } else {
             return res.status(401).json({
@@ -65,6 +64,11 @@ const loginUser = async (req, res) => {
           expiresIn: '1d',
         });
       };
+      const getDashboardPage = (req,res) =>{
+        res.render("dashboard",{
+            link:"dashboard",
+        });
+     };
 
 
-    export { createUser, loginUser };
+    export { createUser,loginUser,getDashboardPage };
