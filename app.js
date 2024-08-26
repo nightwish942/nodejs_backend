@@ -4,7 +4,7 @@ import express from 'express';
 import pageRoute from "./routes/pageRoute.js";
 import photoRoute from "./routes/photoRoute.js";
 import userRoute from "./routes/userRoute.js";
-
+import cookieParser from 'cookie-parser';
 import conn from './db.js';
 
 conn();
@@ -17,6 +17,7 @@ app.set("view engine","ejs");
 //static files middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use(express.static('public'));
 app.use("/",pageRoute);

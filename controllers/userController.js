@@ -32,9 +32,17 @@ const loginUser = async (req, res) => {
 
         }
         if (same) {
+            const token = createToken(user._id);
+            res.cookie('jwt', token, {
+                httpOnly: true,
+                maxAge: 1000 * 60 * 60 * 24,
+              });
+
+
+
             res.status(200).json({
                 user,
-                token:createToken(user._id)
+               
             });
 
         } else {
