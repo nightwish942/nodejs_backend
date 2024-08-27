@@ -6,7 +6,7 @@ const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
-
+//emre
 router.post('/ask-bot', async (req, res) => {
   const userInput = req.body.message;
 
