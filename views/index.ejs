@@ -354,3 +354,120 @@
       <!-- end contact -->
       <!-- end footer -->
       <%- include("partials/_footer")%>
+      <!-- Destek Botu Butonu ve Chat Penceresi -->
+<style>
+   #chatbot-btn {
+     position: fixed;
+     bottom: 20px;
+     right: 20px;
+     background-color: #007bff;
+     color: white;
+     border-radius: 50%;
+     width: 60px;
+     height: 60px;
+     font-size: 24px;
+     text-align: center;
+     line-height: 60px;
+     cursor: pointer;
+     z-index: 1000;
+   }
+ 
+   #chatbot-container {
+     position: fixed;
+     bottom: 100px;
+     right: 20px;
+     width: 300px;
+     height: 400px;
+     background-color: white;
+     border: 1px solid #ccc;
+     border-radius: 10px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+     display: none;
+     z-index: 1000;
+   }
+ 
+   #chatbot-header {
+     background-color: #007bff;
+     color: white;
+     padding: 10px;
+     border-top-left-radius: 10px;
+     border-top-right-radius: 10px;
+     text-align: center;
+   }
+ 
+   #chatbox {
+     padding: 10px;
+     height: 300px;
+     overflow-y: scroll;
+   }
+ 
+   #chatbot-input {
+     width: 100%;
+     padding: 10px;
+     border: none;
+     border-top: 1px solid #ccc;
+   }
+ 
+   #chatbot-close {
+     position: absolute;
+     top: 5px;
+     right: 10px;
+     cursor: pointer;
+   }
+ </style>
+ 
+ <div id="chatbot-btn">
+   💬
+ </div>
+ 
+ <div id="chatbot-container">
+   <div id="chatbot-header">
+     Destek Botu
+     <span id="chatbot-close">X</span>
+   </div>
+   <div id="chatbox">
+     <!-- Botun yanıtları buraya gelecek -->
+   </div>
+   <input type="text" id="chatbot-input" placeholder="Mesajınızı yazın..." />
+ </div>
+ 
+ <script>
+   // Destek Botu açma ve kapatma işlemleri
+   const chatbotBtn = document.getElementById('chatbot-btn');
+   const chatbotContainer = document.getElementById('chatbot-container');
+   const chatbotClose = document.getElementById('chatbot-close');
+ 
+   chatbotBtn.addEventListener('click', () => {
+     chatbotContainer.style.display = 'block';
+   });
+ 
+   chatbotClose.addEventListener('click', () => {
+     chatbotContainer.style.display = 'none';
+   });
+ 
+   // Bot ile etkileşim için mesaj gönderme
+   const chatbotInput = document.getElementById('chatbot-input');
+   const chatbox = document.getElementById('chatbox');
+ 
+   chatbotInput.addEventListener('keypress', async (event) => {
+     if (event.key === 'Enter') {
+       const userInput = chatbotInput.value;
+       chatbox.innerHTML += `<p><strong>Sen:</strong> ${userInput}</p>`;
+ 
+       // API'ye istek gönder
+       const response = await fetch('/ask-bot', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({ message: userInput }),
+       });
+ 
+       const data = await response.json();
+       chatbox.innerHTML += `<p><strong>Bot:</strong> ${data.response}</p>`;
+       chatbotInput.value = '';
+       chatbox.scrollTop = chatbox.scrollHeight;
+     }
+   });
+ </script>
+ 
