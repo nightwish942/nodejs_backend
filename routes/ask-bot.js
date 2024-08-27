@@ -1,14 +1,17 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { Configuration, OpenAIApi } = require('openai');
+import { Configuration, OpenAIApi } from 'openai';
 
+// OpenAI API'yi yapılandırma (Sadece bir defa yapıyoruz)
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,  // .env dosyasından API anahtarını alıyor
 });
 const openai = new OpenAIApi(configuration);
-//emre
+
+// POST route'u /ask-bot için
 router.post('/ask-bot', async (req, res) => {
   const userInput = req.body.message;
+  console.log("Kullanıcıdan gelen mesaj:", userInput);  // Mesajı terminale logla
 
   try {
     const response = await openai.createChatCompletion({
@@ -19,11 +22,13 @@ router.post('/ask-bot', async (req, res) => {
       ],
     });
 
+    console.log("OpenAI yanıtı:", response.data.choices[0].message.content);  // Yanıtı terminale logla
     res.json({ response: response.data.choices[0].message.content });
   } catch (error) {
-    console.error("OpenAI API request error:", error);
+    console.error("API hatası:", error);  // Hata oluşursa terminale yazdır
     res.status(500).send("Bot şu anda cevap veremiyor, lütfen tekrar deneyin.");
   }
 });
 
-module.exports = router;
+
+export default router; // module.exports yerine export default kullan
