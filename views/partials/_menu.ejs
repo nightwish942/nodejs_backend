@@ -14,8 +14,17 @@
                       <li><a class="active" href="/">Home</a></li>
                       <li><a href="/about">About</a></li>
                       <li><a href="/photos">Photos</a></li>
-                      <li><a href="/register">Register</a></li>
-                      <li><a href="/login">Login</a></li>
+                      
+                      <% if (typeof user !== 'undefined') { %>
+                        <li><a href="/logout">Logout</a></li>
+                        <li><a href="/users/users/dashboard">Dashboard</a></li>
+                     <% } else { %>
+                        <li><a class="<%= link === 'login' && 'active' %>" href="/login">Login</a></li>
+                        <li><a class="<%= link === 'register' && 'active' %>" href="/register">Register</a></li>
+                     <% } %>
+                     
+                     
+                      
                      <!--<li><a href="services.html">Services</a></li>
                       <li><a href="projects.html">Projects</a></li>
                       <li><a href="blog.html">Blog</a></li>

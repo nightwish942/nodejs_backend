@@ -5,7 +5,7 @@ import pageRoute from "./routes/pageRoute.js";
 import photoRoute from "./routes/photoRoute.js";
 import userRoute from "./routes/userRoute.js";
 import cookieParser from 'cookie-parser';
-import askBotRoute from "./routes/ask-bot.js"; // Bot route'unu tekrar dahil et
+
 import conn from './db.js';
 import { checkUser } from './middlewares/authMiddleware.js';
 
@@ -21,7 +21,7 @@ app.set("view engine", "ejs");
 app.use(express.static('public'));
 
 // Bot route'unu kullan
-app.use("/", askBotRoute); // Yorum satırından çıkar ve aktif hale getir
+// Yorum satırından çıkar ve aktif hale getir
 
 app.use("/", pageRoute);
 app.use(express.json());
