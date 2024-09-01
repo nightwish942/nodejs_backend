@@ -1,4 +1,5 @@
 <%- include("partials/_header") %>
+
 <!-- body -->
 <body class="main-layout">
   <!-- loader -->
@@ -100,6 +101,21 @@
     </div>
   </div>
   <!-- end gallery -->
+
+  <!-- Weather section -->
+  <div id="weather-container">
+    <h2>Weather in <%= city %></h2>
+    <% if (icon) { %>
+    <img src="https://openweathermap.org/img/wn/<%= icon %>@2x.png" alt="Weather Icon">
+    <% } %>
+    <p id="temp"><%= temp %>°C</p>
+    <p id="description"><%= description %></p>
+    <form action="/weather" method="get">
+      <input type="text" name="city" placeholder="Enter city name" required>
+      <button type="submit">Get Weather</button>
+    </form>
+  </div>
+  <!-- end Weather section -->
 
   <!-- chatbot button and container -->
   <style>
